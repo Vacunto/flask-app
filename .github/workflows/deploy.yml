@@ -14,13 +14,13 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Login to Docker Hub
-        run: docker login -u ${{ secrets.DOCKER_HUB_LOGIN }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_PASSWORD }}
       
       - name: Build Docker image
-        run: docker build -t podmoskovnykh/my-flask-app:latest .
+        run: docker build -t vacunto/my-flask-app:latest .
 
       - name: Push image to Docker Hub
-        run: docker push podmoskovnykh/my-flask-app:latest
+        run: docker push vacunto/my-flask-app:latest
 
       - name: Deploy via SSH
         uses: appleboy/ssh-action@master
@@ -30,6 +30,6 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           port: 4444
           script: |
-            cd /home/ivpodmoskovnykh/flask_app
+            cd /home/vacunto/flask_app
             docker compose pull
             docker compose up -d
